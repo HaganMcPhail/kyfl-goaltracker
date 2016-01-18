@@ -1,0 +1,231 @@
+html, body {
+  background-color: #E2E2E2;
+  margin: 0 auto; }
+
+::-webkit-scrollbar {
+  display: none; }
+
+.container-fluid {
+  width: 100%; }
+
+.container {
+  max-width: 800px; }
+
+header {
+  background-color: #4379B7;
+  margin: 0 -15px;
+  padding: 12px 25px; }
+  header img {
+    height: 35px; }
+
+.header-text {
+  display: inline-block;
+  float: right;
+  color: #f5f5f5;
+  font-family: futura;
+  font-weight: 100;
+  letter-spacing: 1px;
+  font-size: 18px;
+  padding-top: 3px; }
+
+.new-goal {
+  padding: 16px 16px 16px 60px;
+  border: 1px solid #b6b6b6;
+  width: 100%;
+  font-size: 23px;
+  height: 55px;
+  font-weight: 200;
+  outline: none;
+  border-radius: 5px; }
+
+.new-goal-container {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+
+.new-goal-container .btn {
+  height: 55px;
+  border: 1px solid #b6b6b6;
+  background-color: #FFF;
+  color: #555;
+  outline: none; }
+
+.new-goal-container .btn:hover {
+  background-color: #E5E4E2; }
+
+.content {
+  background-color: #f5f5f5;
+  padding: 30px 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  margin-top: 10px; }
+  .content .list {
+    padding: 5px 20px; }
+
+.text-box {
+  padding: 16px 16px 16px 60px;
+  border: none;
+  background: rgba(0, 0, 0, 0.003);
+  width: 100%;
+  font-size: 23px;
+  font-weight: 200;
+  outline: none; }
+
+.goal {
+  padding: 0px 15px;
+  line-height: 20px;
+  font-size: 22px; }
+
+.goalValue {
+  padding-left: 15px; }
+
+.check {
+  opacity: .9; }
+
+.delete {
+  opacity: .9; }
+
+.pencil {
+  opacity: .9; }
+
+.icon {
+  font-size: 20px;
+  padding-right: 10px;
+  cursor: pointer; }
+  .icon:hover {
+    opacity: .2; }
+
+footer {
+  padding: 15px 0; }
+
+.pagesBtn {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  margin: 0px 5px;
+  padding: 8px 15px;
+  color: #777;
+  letter-spacing: 2px;
+  outline: none; }
+
+.pagesBtn:hover, .pagesBtn:active, .pagesBtn:focus {
+  color: #777; }
+
+.pagesBtn:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.25) !important; }
+
+.all-goals {
+  color: rgba(0, 0, 0, 0.3); }
+
+.goalValue input {
+  background-color: #f5f5f5;
+  border: none;
+  outline: none;
+  line-height: 22px;
+  font-size: 22px;
+  padding: 0px;
+  margin: 0px; }
+  .goalValue input:focus, .goalValue input:active {
+    color: rgba(0, 0, 0, 0.25) !important; }
+
+.goals {
+  margin-top: 20px; }
+
+.progress {
+  margin-bottom: 0px;
+  background-color: #E5E4E2; }
+
+.goals ul {
+  list-style-type: none; }
+
+.goals li {
+  margin: 10px 5px; }
+
+.goals input[type="checkbox"] {
+  margin-right: 12px; }
+
+.goals .icon {
+  text-align: right; }
+
+.goals .glyphicon {
+  font-size: 20px;
+  cursor: pointer; }
+
+.add-task-form input {
+  margin: 5px 0; }
+
+.add-task-form .glyphicon {
+  cursor: pointer;
+  color: #4379B7; }
+
+.modal {
+  font-size: 17px; }
+
+.modal input[type="text"] {
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px; }
+
+.tasks .input-group-btn .btn {
+  height: 40px;
+  margin-top: 5px;
+  border: 1px solid #b6b6b6;
+  background-color: #FFF;
+  color: #555;
+  outline: none; }
+
+.congrats {
+  background-color: #41A317;
+  color: #fff;
+  padding: 5px 10px;
+  text-align: center; }
+
+.removed-item {
+  animation: removed-item-animation 1s cubic-bezier(0.55, -0.04, 0.91, 0.94) forwards;
+  /*transform origin is moved to the bottom left corner*/
+  transform-origin: 0% 100%; }
+
+#accordion {
+  margin-left: -15px; }
+
+.actionIconsContainer {
+  padding: 7px;
+  text-align: right; }
+
+.goalContent {
+  padding-bottom: 15px; }
+
+.taskList {
+  margin-top: 15px;
+  font-size: 18px; }
+  .taskList li {
+    padding: 5px 5px; }
+
+.panel-top {
+  background-color: #F2F2F2;
+  margin: 0px 0px;
+  padding: 8px 0px;
+  font-size: 18px;
+  box-shadow: 0px 0px 0px #000; }
+  .panel-top a {
+    color: #4379B7;
+    cursor: pointer; }
+
+.panel-body {
+  background-color: #FCFCFC;
+  padding: 10px 10px;
+  font-size: 18px;
+  box-shadow: 0px 0px 0px #000; }
+
+.goal-title {
+  padding: 7px 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #4379B7; }
+
+@keyframes removed-item-animation {
+  0% {
+    opacity: 1;
+    transform: rotateZ(0); }
+  100% {
+    opacity: 0;
+    transform: translateY(600px) rotateZ(90deg); } }
