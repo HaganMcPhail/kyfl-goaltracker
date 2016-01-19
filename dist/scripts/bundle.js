@@ -50346,17 +50346,30 @@ var React = require('react');
 var Header = require('./common/header');
 var Footer = require('./common/footer');
 var Home = require('./homePage');
+var Menu = require('./common/menu');
 var RouteHandler = require('react-router').RouteHandler;
 
 var App = React.createClass({displayName: "App",
+	getInitialState: function() {
+    	return {
+			showMenu: true
+		};
+  	},
+	toggleMenu: function() {
+		this.setState({showMenu: !this.state.showMenu});
+	},
 	render: function() {
+		var self = this;
 		return (
-			React.createElement("div", null, 
-				React.createElement(Header, null), 
-				React.createElement("div", {className: "container list"}, 
-					React.createElement(Home, null)
+			React.createElement("div", {className: ""}, 
+				React.createElement("div", {className:  this.state.showMenu ? "body-partial" : "body-full"}, 
+					React.createElement(Header, {toggleMenu: self.toggleMenu}), 
+					React.createElement("div", {className: "container list"}, 
+						React.createElement(Home, null)
+					), 
+					React.createElement(Footer, null)
 				), 
-				React.createElement(Footer, null)
+				React.createElement(Menu, {showMenu: this.state.showMenu})
 			)
 		);
 	}
@@ -50364,7 +50377,7 @@ var App = React.createClass({displayName: "App",
 
 module.exports = App;
 
-},{"./common/footer":448,"./common/header":449,"./homePage":450,"react":446,"react-router":273}],448:[function(require,module,exports){
+},{"./common/footer":448,"./common/header":449,"./common/menu":450,"./homePage":451,"react":446,"react-router":273}],448:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -50402,12 +50415,16 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var Header = React.createClass({displayName: "Header",
+	toggleMenu: function() {
+        this.props.toggleMenu();
+    },
 	render: function() {
+		var self = this;
 		return (
 			React.createElement("header", {className: "container-fluid", id: ""}, 
 				React.createElement("img", {src: "images/hs-logo.png", alt: ""}), 
-				React.createElement("div", {className: "header-text hidden-xs"}, 
-					"KYFL Goal Tracker"
+				React.createElement("div", {className: "header-text "}, 
+					React.createElement("span", {onClick: self.toggleMenu, className: "box-shadow-menu"})
 				)
 			)
 		);
@@ -50417,6 +50434,31 @@ var Header = React.createClass({displayName: "Header",
 module.exports = Header;
 
 },{"react":446,"react-router":273}],450:[function(require,module,exports){
+"use strict";
+
+var React = require('react');
+
+var Menu = React.createClass({displayName: "Menu",
+    render: function() {
+        var self = this;
+
+		return (
+            React.createElement("div", null, 
+                
+                    this.props.showMenu ?
+    			    React.createElement("div", {className: "menu-container", id: ""}
+                        
+    			    ) :
+                    React.createElement("div", null)
+                
+            )
+		);
+	}
+});
+
+module.exports = Menu;
+
+},{"react":446}],451:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -50434,31 +50476,26 @@ var Home = React.createClass({displayName: "Home",
 
 	getInitialState: function() {
 		return {
-			todoGoals: [
-				{
-					'id':1,
-					'value': 'This is a long title for a goal. Please do not make your titles this long! Please, I beg of you.',
-					'tasks': [
-						'do this',
-						'do that',
-						'do everything',
-					]
-				},
-				{
-					'id':2,
-					'value': 'Short goal title',
-					'tasks': [
-						'do this',
-						'do that',
-						'do everything',
-					]
-				}
-			],
+			todoGoals: [],
 			completedGoals: [],
 			count: 3,
 			showDeleteAllTodo: true,
 			showDeleteAllCompleted: true
 		};
+	},
+
+	componentWillMount: function() {
+		this.toggleDeleteAll();
+		var todoGoals = [];
+		this.firebaseRef = new Firebase("https://kyfl-goaltracker.firebaseio.com/todoGoals/");
+		// console.log(this);
+		this.firebaseRef.on("child_added", function(dataSnapshot) {
+			console.log(this);
+			todoGoals.push(dataSnapshot.val());
+			this.setState({
+		  		todoGoals: todoGoals
+			});
+		}.bind(this));
 	},
 
 	toggleDeleteAll: function () {
@@ -50476,10 +50513,6 @@ var Home = React.createClass({displayName: "Home",
 
 		console.log(this.state);
 		// console.table(this.state.completedGoals);
-	},
-
-	componentWillMount: function() {
-		this.toggleDeleteAll();
 	},
 
 	removeGoalFromList: function(goalToRemove, list) {
@@ -50541,11 +50574,21 @@ var Home = React.createClass({displayName: "Home",
 	},
 
 	handleSubmit: function(event) {
-	    var newGoal = {id: this.state.count, value: event.target.value};
+	    // var newGoal = {id: this.state.count, value: event.target.value};
+	    // if( event.keyCode == 13 ) {
+	    //     var list = this.state.todoGoals;
+	    //     list.push(newGoal);
+	    //     this.setState({goals: list, count: this.state.count + 1});
+	    //     event.target.value = '';
+	    //     this.transitionTo('todo');
+	    // }
+		//
+	    // this.toggleDeleteAll();
+
+		var newGoal = {id: this.state.count, value: event.target.value};
 	    if( event.keyCode == 13 ) {
-	        var list = this.state.todoGoals;
-	        list.push(newGoal);
-	        this.setState({goals: list, count: this.state.count + 1});
+			this.firebaseRef.push(newGoal);
+	        this.setState({count: this.state.count + 1});
 	        event.target.value = '';
 	        this.transitionTo('todo');
 	    }
@@ -50580,12 +50623,24 @@ var Home = React.createClass({displayName: "Home",
 
     },
 
-	// <input
-	// 	name="add-goal"
-	// 	className="form-control new-goal"
-	// 	placeholder="What is your new goal?"
-	// 	onKeyDown={this.handleSubmit}
-	// 	autoComplete="off"  />
+	// {
+	// 	'id':1,
+	// 	'value': 'This is a long title for a goal. Please do not make your titles this long! Please, I beg of you.',
+	// 	'tasks': [
+	// 		'do this',
+	// 		'do that',
+	// 		'do everything',
+	// 	]
+	// },
+	// {
+	// 	'id':2,
+	// 	'value': 'Short goal title',
+	// 	'tasks': [
+	// 		'do this',
+	// 		'do that',
+	// 		'do everything',
+	// 	]
+	// }
 
 	render: function() {
 		return (
@@ -50624,7 +50679,7 @@ var Home = React.createClass({displayName: "Home",
 
 module.exports = Home;
 
-},{"./list/completedGoalList":451,"./list/goalList":454,"lodash":2,"react":446,"react-router":273}],451:[function(require,module,exports){
+},{"./list/completedGoalList":452,"./list/goalList":455,"lodash":2,"react":446,"react-router":273}],452:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -50668,7 +50723,7 @@ var GoalList = React.createClass({displayName: "GoalList",
 
 module.exports = GoalList;
 
-},{"../list/deleteAll.js":452,"../list/goal.js":453,"react":446,"react-bootstrap":74,"react-router":273}],452:[function(require,module,exports){
+},{"../list/deleteAll.js":453,"../list/goal.js":454,"react":446,"react-bootstrap":74,"react-router":273}],453:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -50695,7 +50750,7 @@ var DeleteAll = React.createClass({displayName: "DeleteAll",
 
 module.exports = DeleteAll;
 
-},{"../list/goal.js":453,"react":446,"react-router":273}],453:[function(require,module,exports){
+},{"../list/goal.js":454,"react":446,"react-router":273}],454:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -50830,7 +50885,7 @@ module.exports = Goal;
 // 		</div>
 // }
 
-},{"lodash":2,"react":446,"react-bootstrap":74,"react-dom":248,"react-router":273}],454:[function(require,module,exports){
+},{"lodash":2,"react":446,"react-bootstrap":74,"react-dom":248,"react-router":273}],455:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -50870,7 +50925,7 @@ var GoalList = React.createClass({displayName: "GoalList",
 
 module.exports = GoalList;
 
-},{"../list/deleteAll.js":452,"../list/goal.js":453,"react":446,"react-bootstrap":74,"react-router":273}],455:[function(require,module,exports){
+},{"../list/deleteAll.js":453,"../list/goal.js":454,"react":446,"react-bootstrap":74,"react-router":273}],456:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -50882,7 +50937,7 @@ Router.run(routes, function(Handler) {
 	ReactDOM.render(React.createElement(Handler, null), document.getElementById('app'));
 });
 
-},{"./routes":456,"react":446,"react-dom":248,"react-router":273}],456:[function(require,module,exports){
+},{"./routes":457,"react":446,"react-dom":248,"react-router":273}],457:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -50904,4 +50959,4 @@ var routes = (
 
 module.exports = routes;
 
-},{"./components/app":447,"./components/list/completedGoalList":451,"./components/list/goalList":454,"react":446,"react-router":273}]},{},[455]);
+},{"./components/app":447,"./components/list/completedGoalList":452,"./components/list/goalList":455,"react":446,"react-router":273}]},{},[456]);

@@ -15,31 +15,26 @@ var Home = React.createClass({
 
 	getInitialState: function() {
 		return {
-			todoGoals: [
-				{
-					'id':1,
-					'value': 'This is a long title for a goal. Please do not make your titles this long! Please, I beg of you.',
-					'tasks': [
-						'do this',
-						'do that',
-						'do everything',
-					]
-				},
-				{
-					'id':2,
-					'value': 'Short goal title',
-					'tasks': [
-						'do this',
-						'do that',
-						'do everything',
-					]
-				}
-			],
+			todoGoals: [],
 			completedGoals: [],
 			count: 3,
 			showDeleteAllTodo: true,
 			showDeleteAllCompleted: true
 		};
+	},
+
+	componentWillMount: function() {
+		this.toggleDeleteAll();
+		var todoGoals = [];
+		this.firebaseRef = new Firebase("https://kyfl-goaltracker.firebaseio.com/todoGoals/");
+		// console.log(this);
+		this.firebaseRef.on("child_added", function(dataSnapshot) {
+			console.log(this);
+			todoGoals.push(dataSnapshot.val());
+			this.setState({
+		  		todoGoals: todoGoals
+			});
+		}.bind(this));
 	},
 
 	toggleDeleteAll: function () {
@@ -57,10 +52,6 @@ var Home = React.createClass({
 
 		console.log(this.state);
 		// console.table(this.state.completedGoals);
-	},
-
-	componentWillMount: function() {
-		this.toggleDeleteAll();
 	},
 
 	removeGoalFromList: function(goalToRemove, list) {
@@ -122,11 +113,21 @@ var Home = React.createClass({
 	},
 
 	handleSubmit: function(event) {
-	    var newGoal = {id: this.state.count, value: event.target.value};
+	    // var newGoal = {id: this.state.count, value: event.target.value};
+	    // if( event.keyCode == 13 ) {
+	    //     var list = this.state.todoGoals;
+	    //     list.push(newGoal);
+	    //     this.setState({goals: list, count: this.state.count + 1});
+	    //     event.target.value = '';
+	    //     this.transitionTo('todo');
+	    // }
+		//
+	    // this.toggleDeleteAll();
+
+		var newGoal = {id: this.state.count, value: event.target.value};
 	    if( event.keyCode == 13 ) {
-	        var list = this.state.todoGoals;
-	        list.push(newGoal);
-	        this.setState({goals: list, count: this.state.count + 1});
+			this.firebaseRef.push(newGoal);
+	        this.setState({count: this.state.count + 1});
 	        event.target.value = '';
 	        this.transitionTo('todo');
 	    }
@@ -161,12 +162,24 @@ var Home = React.createClass({
 
     },
 
-	// <input
-	// 	name="add-goal"
-	// 	className="form-control new-goal"
-	// 	placeholder="What is your new goal?"
-	// 	onKeyDown={this.handleSubmit}
-	// 	autoComplete="off"  />
+	// {
+	// 	'id':1,
+	// 	'value': 'This is a long title for a goal. Please do not make your titles this long! Please, I beg of you.',
+	// 	'tasks': [
+	// 		'do this',
+	// 		'do that',
+	// 		'do everything',
+	// 	]
+	// },
+	// {
+	// 	'id':2,
+	// 	'value': 'Short goal title',
+	// 	'tasks': [
+	// 		'do this',
+	// 		'do that',
+	// 		'do everything',
+	// 	]
+	// }
 
 	render: function() {
 		return (

@@ -6106,6 +6106,45 @@ footer {
   .glyphicon-comment:hover {
     opacity: 1; }
 
+.menu-container {
+  display: inline-block;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 20%;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999; }
+
+.body-full {
+  display: inline-block;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 999; }
+
+.body-partial {
+  display: inline-block;
+  width: 80%;
+  min-height: 100vh;
+  z-index: 999; }
+
+.box-shadow-menu {
+  position: relative;
+  padding-top: 5px;
+  padding-right: 10px;
+  padding-left: 1.25em;
+  cursor: pointer; }
+
+.box-shadow-menu:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 1.5em;
+  height: 0.15em;
+  background: white;
+  box-shadow: 0 0.5em 0 0 white, 0 1em 0 0 white; }
+
 @keyframes removed-item-animation {
   0% {
     opacity: 1;

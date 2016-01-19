@@ -4,17 +4,30 @@ var React = require('react');
 var Header = require('./common/header');
 var Footer = require('./common/footer');
 var Home = require('./homePage');
+var Menu = require('./common/menu');
 var RouteHandler = require('react-router').RouteHandler;
 
 var App = React.createClass({
+	getInitialState: function() {
+    	return {
+			showMenu: true
+		};
+  	},
+	toggleMenu: function() {
+		this.setState({showMenu: !this.state.showMenu});
+	},
 	render: function() {
+		var self = this;
 		return (
-			<div>
-				<Header />
-				<div className="container list">
-					<Home />
+			<div className="">
+				<div className={ this.state.showMenu ? "body-partial" : "body-full" }>
+					<Header toggleMenu={self.toggleMenu}/>
+					<div className="container list">
+						<Home />
+					</div>
+					<Footer />
 				</div>
-				<Footer />
+				<Menu showMenu={this.state.showMenu} />
 			</div>
 		);
 	}
