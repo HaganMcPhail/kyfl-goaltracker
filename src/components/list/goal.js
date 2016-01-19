@@ -46,7 +46,7 @@ var Goal = React.createClass({
 
 			<div>
 				<div className="row panel-top">
-					<div className="goal-title col-sm-9">
+					<div className="goal-title col-sm-8">
 						{
 							this.state.showInput ?
 								<form className="commentForm" onSubmit={self.hideTextbox}>
@@ -58,7 +58,7 @@ var Goal = React.createClass({
 						}
 
 					</div>
-					<div className="col-sm-3">
+					<div className="col-sm-4">
 						<div className="row actionIconsContainer">
 							<span className={'glyphicon glyphicon-'+ this.props.addGoalIcon + ' check icon'}
 								onClick={self.changeGoalList}></span>
@@ -73,8 +73,11 @@ var Goal = React.createClass({
 				</div>
 		        <Panel collapsible expanded={this.state.expanded}>
 					<div className="panel-body">
-				  		Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-		          		Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+				  		{this.props.goal.value}
+						<div id="drop-area" className="drop-area">
+							<div className="drop-area__item"></div>
+							<div className="drop-area__item"></div>
+						</div>
 					</div>
 		        </Panel>
 	      </div>

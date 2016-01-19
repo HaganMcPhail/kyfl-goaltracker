@@ -50437,7 +50437,7 @@ var Home = React.createClass({displayName: "Home",
 			todoGoals: [
 				{
 					'id':1,
-					'value': 'This is a long title for a goal. Please do not make your titles this long!',
+					'value': 'This is a long title for a goal. Please do not make your titles this long! Please, I beg of you.',
 					'tasks': [
 						'do this',
 						'do that',
@@ -50744,7 +50744,7 @@ var Goal = React.createClass({displayName: "Goal",
 
 			React.createElement("div", null, 
 				React.createElement("div", {className: "row panel-top"}, 
-					React.createElement("div", {className: "goal-title col-sm-9"}, 
+					React.createElement("div", {className: "goal-title col-sm-8"}, 
 						
 							this.state.showInput ?
 								React.createElement("form", {className: "commentForm", onSubmit: self.hideTextbox}, 
@@ -50756,7 +50756,7 @@ var Goal = React.createClass({displayName: "Goal",
 						
 
 					), 
-					React.createElement("div", {className: "col-sm-3"}, 
+					React.createElement("div", {className: "col-sm-4"}, 
 						React.createElement("div", {className: "row actionIconsContainer"}, 
 							React.createElement("span", {className: 'glyphicon glyphicon-'+ this.props.addGoalIcon + ' check icon', 
 								onClick: self.changeGoalList}), 
@@ -50771,8 +50771,11 @@ var Goal = React.createClass({displayName: "Goal",
 				), 
 		        React.createElement(Panel, {collapsible: true, expanded: this.state.expanded}, 
 					React.createElement("div", {className: "panel-body"}, 
-				  		"Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid." + ' ' +
-		          		"Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident."
+				  		this.props.goal.value, 
+						React.createElement("div", {id: "drop-area", className: "drop-area"}, 
+							React.createElement("div", {className: "drop-area__item"}), 
+							React.createElement("div", {className: "drop-area__item"})
+						)
 					)
 		        )
 	      )

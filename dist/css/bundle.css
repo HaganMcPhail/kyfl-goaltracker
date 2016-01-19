@@ -6094,6 +6094,18 @@ footer {
   text-overflow: ellipsis;
   color: #4379B7; }
 
+.glyphicon-thumbs-up {
+  color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed !important; }
+  .glyphicon-thumbs-up:hover {
+    opacity: 1; }
+
+.glyphicon-comment {
+  color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed !important; }
+  .glyphicon-comment:hover {
+    opacity: 1; }
+
 @keyframes removed-item-animation {
   0% {
     opacity: 1;

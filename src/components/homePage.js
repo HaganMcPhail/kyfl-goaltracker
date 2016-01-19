@@ -18,7 +18,7 @@ var Home = React.createClass({
 			todoGoals: [
 				{
 					'id':1,
-					'value': 'This is a long title for a goal. Please do not make your titles this long!',
+					'value': 'This is a long title for a goal. Please do not make your titles this long! Please, I beg of you.',
 					'tasks': [
 						'do this',
 						'do that',

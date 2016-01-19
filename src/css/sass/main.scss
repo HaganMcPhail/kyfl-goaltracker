@@ -277,6 +277,22 @@ footer{
 	color:#4379B7;
 }
 
+.glyphicon-thumbs-up {
+  color: $black25;
+  cursor:not-allowed !important;
+  &:hover {
+	  opacity: 1;
+  }
+}
+
+.glyphicon-comment {
+	color: $black25;
+    cursor:not-allowed !important;
+	&:hover {
+		opacity: 1;
+	}
+}
+
 @keyframes removed-item-animation {
 	0% {
         opacity: 1;
